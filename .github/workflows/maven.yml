@@ -1,4 +1,4 @@
-name: Java Calculator CI with Tests
+name: Java Calculator CI – All Maven Goals
 
 on:
   push:
@@ -9,13 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout source code
+      uses: actions/checkout@v4
 
-    - name: Setup Java
+    - name: Set up Java
       uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Build and Test with Maven
-      run: mvn clean test
+    - name: Run all Maven lifecycle goals
+      run: |
+        mvn clean
+        mvn validate
+        mvn compile
+        mvn test
+        mvn package
+        mvn verify
+        mvn install
+        mvn deploy || true
+        mvn site || true
