@@ -1,4 +1,4 @@
-name: Java Calculator CI
+name: Java Calculator CI with Tests
 
 on:
   push:
@@ -17,5 +17,5 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Build with Maven
-      run: mvn clean compile
+    - name: Build and Test with Maven
+      run: mvn clean test
