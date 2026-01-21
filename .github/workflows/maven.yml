@@ -1,31 +1,24 @@
-name: Java Calculator CI – All Maven Goals
+name: Maven Multibranch Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+      - dev
+      - feature-*
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-    - name: Set up Java
-      uses: actions/setup-java@v4
+    - name: Set up JDK
+      uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '17'
         distribution: 'temurin'
 
-    - name: Run all Maven lifecycle goals
-      run: |
-        mvn clean
-        mvn validate
-        mvn compile
-        mvn test
-        mvn package
-        mvn verify
-        mvn install
-        mvn deploy || true
-        mvn site || true
+    - name: Build with Maven
+      run: mvn clean package
